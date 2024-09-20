@@ -16,7 +16,17 @@ async function main() {
     },
   })
 
-  console.log({ admin })
+  const initialRepo = await prisma.repository.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      userId: admin.id,
+      name: 'SQUAADS-AI-WIZARD',
+      url: 'https://github.com/YuniorGlez/SQUAADS-AI-WIZARD',
+    },
+  })
+
+  console.log({ admin, initialRepo })
 }
 
 main()

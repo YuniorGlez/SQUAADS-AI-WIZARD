@@ -1,21 +1,43 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { GitHubLogoIcon, FileTextIcon, DiagramTreeIcon, FileIcon, DownloadIcon } from '@radix-ui/react-icons'
 
+interface Repository {
+  id: string;
+  name: string;
+  url: string;
+}
+
 export default function Dashboard() {
+  const [repositories, setRepositories] = useState<Repository[]>([]);
   const [activeRepo, setActiveRepo] = useState('');
   const [generatedContent, setGeneratedContent] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  const repositories = [
-    { name: 'Project A', id: 'proj-a' },
-    { name: 'Project B', id: 'proj-b' },
-    { name: 'Project C', id: 'proj-c' },
-  ];
+  useEffect(() => {
+    async function fetchRepositories() {
+      try {
+        const response = await fetch('/api/repositories');
+        if (response.ok) {
+          const data = await response.json();
+          setRepositories(data);
+        } else {
+          console.error('Failed to fetch repositories');
+        }
+      } catch (error) {
+        console.error('Error fetching repositories:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchRepositories();
+  }, []);
 
   const generateContent = (type) => {
     setGeneratedContent(`Generated ${type} for ${activeRepo}`);
@@ -33,17 +55,23 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[300px]">
-              {repositories.map((repo) => (
-                <Button
-                  key={repo.id}
-                  variant={activeRepo === repo.id ? "secondary" : "ghost"}
-                  className="w-full justify-start mb-2"
-                  onClick={() => setActiveRepo(repo.id)}
-                >
-                  <GitHubLogoIcon className="mr-2 h-4 w-4" />
-                  {repo.name}
-                </Button>
-              ))}
+              {isLoading ? (
+                <p>Loading repositories...</p>
+              ) : repositories.length === 0 ? (
+                <p>No repositories found.</p>
+              ) : (
+                repositories.map((repo) => (
+                  <Button
+                    key={repo.id}
+                    variant={activeRepo === repo.id ? "secondary" : "ghost"}
+                    className="w-full justify-start mb-2"
+                    onClick={() => setActiveRepo(repo.id)}
+                  >
+                    <GitHubLogoIcon className="mr-2 h-4 w-4" />
+                    {repo.name}
+                  </Button>
+                ))
+              )}
             </ScrollArea>
           </CardContent>
           <CardFooter>
