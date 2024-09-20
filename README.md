@@ -54,12 +54,27 @@ SQUAADS-AI-WIZARD is an AI-powered tool designed to enhance software development
    npx prisma generate
    ```
 
-7. Start the development server:
+7. Run prisma seed
+   ```
+   npx prisma db seed
+   ```
+   
+8. Start the development server:
    ```
    npm run dev
    ```
 
 8. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Authentication
+
+The application uses a simple username and password authentication system. 
+To log in, use the following credentials:
+
+- Username: admin
+- Password: password (replace with the actual password you set in the seed script)
+
+Note: For production use, it's recommended to implement a more robust authentication system.
 
 ## UI Components
 

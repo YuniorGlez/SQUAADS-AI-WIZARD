@@ -13,6 +13,7 @@ model User {
   email        String       @unique
   repositories Repository[]
   projects     Project[]
+  password     String
 }
 
 model Repository {
