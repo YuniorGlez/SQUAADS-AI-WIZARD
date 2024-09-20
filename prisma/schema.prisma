@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           BigInt       @id @default(autoincrement())
+  username     String
+  email        String       @unique
+  repositories Repository[]
+  projects     Project[]
+}
+
+model Repository {
+  id        BigInt    @id @default(autoincrement())
+  userId    BigInt
+  name      String
+  url       String
+  user      User      @relation(fields: [userId], references: [id])
+  analyses  Analysis[]
+}
+
+model Analysis {
+  id                     BigInt    @id @default(autoincrement())
+  repositoryId           BigInt
+  analysisDate           DateTime  @default(now())
+  markdownSummary        String?
+  mermaidDiagram         String?
+  technicalDocumentation String?
+  prompt                 String?
+  repository             Repository @relation(fields: [repositoryId], references: [id])
+}
+
+model Project {
+  id          BigInt         @id @default(autoincrement())
+  userId      BigInt
+  name        String
+  description String?
+  user        User           @relation(fields: [userId], references: [id])
+  outputs     ProjectOutput[]
+}
+
+model ProjectOutput {
+  id         BigInt  @id @default(autoincrement())
+  projectId  BigInt
+  outputType String
+  content    String?
+  project    Project @relation(fields: [projectId], references: [id])
+}
