@@ -13,9 +13,9 @@ SQUAADS-AI-WIZARD is an AI-powered tool designed to enhance software development
 
 ### Prerequisites
 
-- Docker
 - Node.js (version 16.13 or higher)
 - npm or yarn
+- Docker
 
 ### Setup
 
@@ -61,23 +61,11 @@ SQUAADS-AI-WIZARD is an AI-powered tool designed to enhance software development
 
 8. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Verifying Setup
+## UI Components
 
-To verify that the database connection is working:
+This project uses shadcn/ui components. To add new components, use the following command:
+`npx shadcn-ui@latest add [component-name]`
 
-1. Visit `http://localhost:3000/api/test` in your browser. You should see a JSON response with a created user.
-
-2. You can also use Prisma Studio to view and manipulate the database:
-   ```
-   npx prisma studio
-   ```
-
-## Main Screens
-
-1. **Dashboard**: View and connect projects
-2. **Project Summary**: Display generated markdown
-3. **System Diagram**: Visualize and download Mermaid diagrams
-4. **Prompt Generator**: Configure and download AI-optimized prompts
 
 ## Learn More
 
@@ -86,9 +74,12 @@ To learn more about the technologies used in this project, check out the followi
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Prisma Documentation](https://www.prisma.io/docs/)
 - [Docker Documentation](https://docs.docker.com/)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is licensed under the MIT License.
